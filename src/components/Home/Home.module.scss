@@ -1,0 +1,70 @@
+@use '../../styles/variables' as *;
+
+.container {
+  padding: 40px 90px;
+  margin-left: $sidebar-width;
+  margin-top: $header-height;
+  
+  h1 {
+    font-size: $font-size-xlarge;
+    font-weight: 500;
+    margin-bottom: 20px;
+    color: $color-primary;
+  }
+  
+  p {
+    font-size: $font-size-medium;
+    margin-bottom: 40px;
+  }
+}
+
+.userList {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.userCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  color: $color-text;
+  transition: transform 0.3s, box-shadow 0.3s;
+  width: 200px;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.userIcon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: $color-primary;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.userName {
+  font-size: $font-size-medium;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.dataSource {
+  font-size: $font-size-small;
+  color: #74798C;
+  font-style: italic;
+} 

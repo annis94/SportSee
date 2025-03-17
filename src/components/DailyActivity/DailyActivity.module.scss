@@ -1,0 +1,64 @@
+@import '../../styles/variables.scss';
+
+.container {
+  background: rgba(251, 251, 251, 1) !important;
+  border-radius: 5px;
+  padding: 24px;
+  height: 320px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.0212249);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+
+  h2 {
+    font-size: 15px;
+    color: $color-text;
+  }
+}
+
+.legend {
+  display: flex;
+  gap: 32px;
+
+  span {
+    font-size: 14px;
+    color: #74798C;
+    position: relative;
+    padding-left: 24px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    &:first-child::before {
+      background: #282D30;
+    }
+
+    &:last-child::before {
+      background: $color-primary;
+    }
+  }
+}
+
+.tooltip {
+  background: $color-primary;
+  color: white;
+  padding: 10px;
+  font-size: 12px;
+  text-align: center;
+
+  p {
+    margin: 5px 0;
+  }
+}
