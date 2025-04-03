@@ -30,7 +30,7 @@ export const getUserData = async (userId) => {
     return formatUserData(response.data.data);
   } catch (error) {
     console.error('Erreur lors de la récupération des données utilisateur:', error);
-    return null;
+    throw error;
   }
 };
 
@@ -45,7 +45,7 @@ export const getUserActivity = async (userId) => {
     return response.data.data;
   } catch (error) {
     console.error('Erreur lors de la récupération de l\'activité:', error);
-    return null;
+    throw error;
   }
 };
 
@@ -60,7 +60,7 @@ export const getUserAverageSessions = async (userId) => {
     return response.data.data;
   } catch (error) {
     console.error('Erreur lors de la récupération des sessions moyennes:', error);
-    return null;
+    throw error;
   }
 };
 
@@ -75,6 +75,6 @@ export const getUserPerformance = async (userId) => {
     return response.data.data;
   } catch (error) {
     console.error('Erreur lors de la récupération des performances:', error);
-    return null;
+    throw error;
   }
 }; 
