@@ -16,6 +16,11 @@
     font-size: $font-size-medium;
     margin-bottom: 40px;
   }
+
+  .error {
+    color: $color-primary;
+    font-weight: 500;
+  }
 }
 
 .userList {
@@ -61,10 +66,4 @@
   font-size: $font-size-medium;
   font-weight: 500;
   margin-bottom: 10px;
-}
-
-.dataSource {
-  font-size: $font-size-small;
-  color: #74798C;
-  font-style: italic;
 } 

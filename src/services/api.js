@@ -1,143 +1,80 @@
 import axios from 'axios';
-import { mockUserData, mockActivity, mockAverageSessions, mockPerformance } from './mockData';
+import { mockUsers, mockActivity, mockAverageSessions, mockPerformance } from './mockData';
 
-// Configuration de l'URL de base de l'API
-// Idéalement, cela devrait être dans un fichier .env
-const API_BASE_URL = 'http://localhost:3000';
-
-// Nous n'utilisons plus cette variable globale car nous allons décider par utilisateur
-// const USE_MOCK_DATA = false;
-
-/**
- * Formatte les données utilisateur pour standardiser la structure
- * @param {Object} data - Données brutes de l'API
- * @returns {Object} - Données formatées
- */
+// Fonction pour standardiser les données utilisateur
 const formatUserData = (data) => {
-  // Certains utilisateurs ont todayScore, d'autres ont score
-  const score = data.todayScore || data.score;
-  
   return {
-    id: data.id,
-    userInfos: data.userInfos,
-    score: score,
-    keyData: data.keyData
+    ...data,
+    score: data.score || data.todayScore || 0,
+    userInfos: {
+      ...data.userInfos,
+      name: `${data.userInfos.firstName} ${data.userInfos.lastName}`
+    }
   };
 };
 
-/**
- * Vérifie si la réponse de l'API est valide
- * @param {Object} response - Réponse de l'API
- * @returns {Boolean} - True si la réponse est valide
- */
-const isValidResponse = (response) => {
-  return response && response.data && response.data.data;
+// Fonction pour déterminer si on utilise les données mockées
+const useMockData = () => {
+  return process.env.NODE_ENV === 'development';
 };
 
-/**
- * Détermine si on doit utiliser les données fictives pour un utilisateur
- * @param {number} userId - ID de l'utilisateur
- * @returns {Boolean} - True si on doit utiliser les données fictives
- */
-const shouldUseMockData = (userId) => {
-  // Utiliser les données fictives uniquement pour l'utilisateur 12 (Thomas Durand)
-  return userId === 12;
-};
-
-/**
- * Récupère les informations de l'utilisateur
- * @param {number} userId - ID de l'utilisateur
- * @returns {Promise} - Données de l'utilisateur
- */
+// Service pour récupérer les données utilisateur
 export const getUserData = async (userId) => {
-  if (shouldUseMockData(userId)) {
-    console.log(`Utilisation des données fictives pour l'utilisateur ${userId}`);
-    return Promise.resolve(mockUserData);
+  if (useMockData()) {
+    const user = mockUsers.find(u => u.id === userId);
+    return user ? formatUserData(user) : null;
   }
-  
+
   try {
-    console.log(`Utilisation de l'API pour l'utilisateur ${userId}`);
-    const response = await axios.get(`${API_BASE_URL}/user/${userId}`);
-    
-    if (!isValidResponse(response)) {
-      throw new Error("Données utilisateur invalides reçues de l'API");
-    }
-    
+    const response = await axios.get(`http://localhost:3000/user/${userId}`);
     return formatUserData(response.data.data);
   } catch (error) {
     console.error('Erreur lors de la récupération des données utilisateur:', error);
-    throw error;
+    return null;
   }
 };
 
-/**
- * Récupère les données d'activité de l'utilisateur
- * @param {number} userId - ID de l'utilisateur
- * @returns {Promise} - Données d'activité
- */
+// Service pour récupérer l'activité
 export const getUserActivity = async (userId) => {
-  if (shouldUseMockData(userId)) {
-    return Promise.resolve(mockActivity);
+  if (useMockData()) {
+    return mockActivity;
   }
-  
+
   try {
-    const response = await axios.get(`${API_BASE_URL}/user/${userId}/activity`);
-    
-    if (!isValidResponse(response)) {
-      throw new Error("Données d'activité invalides reçues de l'API");
-    }
-    
+    const response = await axios.get(`http://localhost:3000/user/${userId}/activity`);
     return response.data.data;
   } catch (error) {
-    console.error('Erreur lors de la récupération des données d\'activité:', error);
-    throw error;
+    console.error('Erreur lors de la récupération de l\'activité:', error);
+    return null;
   }
 };
 
-/**
- * Récupère les données de sessions moyennes de l'utilisateur
- * @param {number} userId - ID de l'utilisateur
- * @returns {Promise} - Données de sessions
- */
+// Service pour récupérer les sessions moyennes
 export const getUserAverageSessions = async (userId) => {
-  if (shouldUseMockData(userId)) {
-    return Promise.resolve(mockAverageSessions);
+  if (useMockData()) {
+    return mockAverageSessions;
   }
-  
+
   try {
-    const response = await axios.get(`${API_BASE_URL}/user/${userId}/average-sessions`);
-    
-    if (!isValidResponse(response)) {
-      throw new Error("Données de sessions invalides reçues de l'API");
-    }
-    
+    const response = await axios.get(`http://localhost:3000/user/${userId}/average-sessions`);
     return response.data.data;
   } catch (error) {
-    console.error('Erreur lors de la récupération des données de sessions:', error);
-    throw error;
+    console.error('Erreur lors de la récupération des sessions moyennes:', error);
+    return null;
   }
 };
 
-/**
- * Récupère les données de performance de l'utilisateur
- * @param {number} userId - ID de l'utilisateur
- * @returns {Promise} - Données de performance
- */
+// Service pour récupérer les performances
 export const getUserPerformance = async (userId) => {
-  if (shouldUseMockData(userId)) {
-    return Promise.resolve(mockPerformance);
+  if (useMockData()) {
+    return mockPerformance;
   }
-  
+
   try {
-    const response = await axios.get(`${API_BASE_URL}/user/${userId}/performance`);
-    
-    if (!isValidResponse(response)) {
-      throw new Error("Données de performance invalides reçues de l'API");
-    }
-    
+    const response = await axios.get(`http://localhost:3000/user/${userId}/performance`);
     return response.data.data;
   } catch (error) {
-    console.error('Erreur lors de la récupération des données de performance:', error);
-    throw error;
+    console.error('Erreur lors de la récupération des performances:', error);
+    return null;
   }
 }; 
