@@ -17,7 +17,12 @@ function DailyActivity({ data }) {
           <XAxis dataKey="day" tickLine={false} tick={{fontSize: 14}} />
           <YAxis yAxisId="kg" orientation="right" tickLine={false} axisLine={false} tick={{fontSize: 14}} />
           <YAxis yAxisId="cal" orientation="left" hide={true} />
-          <Tooltip content={CustomTooltip} />
+          <Tooltip 
+            content={CustomTooltip} 
+            wrapperStyle={{ outline: 'none' }}
+            offset={0}
+            allowEscapeViewBox={{ x: false, y: true }}
+          />
           <Bar yAxisId="kg" dataKey="kilogram" fill="#282D30" barSize={7} radius={[3, 3, 0, 0]} />
           <Bar yAxisId="cal" dataKey="calories" fill="#E60000" barSize={7} radius={[3, 3, 0, 0]} />
         </BarChart>
@@ -30,8 +35,8 @@ function CustomTooltip({ active, payload }) {
   if (active && payload && payload.length) {
     return (
       <div className={styles.tooltip}>
-        <p>{payload[0].value}kg</p>
-        <p>{payload[1].value}kCal</p>
+        <div>{`${payload[0].value}kg`}</div>
+        <div>{`${payload[1].value}Kcal`}</div>
       </div>
     );
   }

@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { mockUsers, mockActivity, mockAverageSessions, mockPerformance } from './mockData';
 
+// Configuration globale pour déterminer la source de données
+// Le développeur peut changer cette valeur pour basculer entre mock et API
+const USE_MOCK_DATA = true; // true pour utiliser les données mockées, false pour utiliser l'API
+
 // Fonction pour standardiser les données utilisateur
 const formatUserData = (data) => {
   return {
@@ -13,14 +17,9 @@ const formatUserData = (data) => {
   };
 };
 
-// Fonction pour déterminer si on utilise les données mockées
-const useMockData = () => {
-  return process.env.NODE_ENV === 'development';
-};
-
 // Service pour récupérer les données utilisateur
 export const getUserData = async (userId) => {
-  if (useMockData()) {
+  if (USE_MOCK_DATA) {
     const user = mockUsers.find(u => u.id === userId);
     return user ? formatUserData(user) : null;
   }
@@ -36,7 +35,7 @@ export const getUserData = async (userId) => {
 
 // Service pour récupérer l'activité
 export const getUserActivity = async (userId) => {
-  if (useMockData()) {
+  if (USE_MOCK_DATA) {
     return mockActivity;
   }
 
@@ -51,7 +50,7 @@ export const getUserActivity = async (userId) => {
 
 // Service pour récupérer les sessions moyennes
 export const getUserAverageSessions = async (userId) => {
-  if (useMockData()) {
+  if (USE_MOCK_DATA) {
     return mockAverageSessions;
   }
 
@@ -66,7 +65,7 @@ export const getUserAverageSessions = async (userId) => {
 
 // Service pour récupérer les performances
 export const getUserPerformance = async (userId) => {
-  if (useMockData()) {
+  if (USE_MOCK_DATA) {
     return mockPerformance;
   }
 

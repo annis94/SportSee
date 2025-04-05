@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
 import DailyActivity from '../DailyActivity/DailyActivity';
 import SessionDuration from '../SessionDuration/SessionDuration';
 import Performance from '../Performance/Performance';
@@ -8,10 +8,21 @@ import KeyData from '../KeyData/KeyData';
 import LoadingError from '../LoadingError/LoadingError';
 import { getUserData, getUserActivity, getUserAverageSessions, getUserPerformance } from '../../services/api';
 
+// Liste des IDs utilisateurs valides
+const VALID_USER_IDS = [12, 18];
+
 function Dashboard() {
   // Récupération de l'ID utilisateur depuis l'URL
   const { userId } = useParams();
-  const userIdNumber = parseInt(userId, 10);
+  
+  // Vérification stricte que userId est un nombre entier valide
+  const isValidInteger = /^[0-9]+$/.test(userId);
+  const userIdNumber = isValidInteger ? parseInt(userId, 10) : null;
+  
+  // Redirection vers la page 404 si l'ID n'est pas valide
+  if (!isValidInteger || !VALID_USER_IDS.includes(userIdNumber)) {
+    return <Navigate to="/404" replace />;
+  }
   
   // États pour stocker les données
   const [userData, setUserData] = useState(null);
