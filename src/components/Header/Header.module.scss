@@ -7,7 +7,6 @@
   right: 0;
   height: $header-height;
   background-color: $color-secondary;
-  padding: 0 20px;
   display: flex;
   align-items: center;
   z-index: 100;
@@ -18,7 +17,7 @@
   display: flex;
   align-items: center;
   text-decoration: none;
-  margin-right: 150px;
+  padding: 0 20px;
   
   img {
     height: 60px;
@@ -29,17 +28,21 @@
 .nav {
   display: flex;
   flex: 1;
-  justify-content: space-between;
   align-items: center;
-  max-width: 800px;
+  height: 100%;
   
   a {
+    flex: 1;
     color: white;
     text-decoration: none;
     font-size: $font-size-medium;
-    font-weight: bold;
+    font-weight: 500;
     white-space: nowrap;
-    padding: 0 10px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
     
     &:hover {
       color: $color-primary;
@@ -47,7 +50,10 @@
   }
 
   @media (max-width: 1024px) {
-    justify-content: space-around;
     margin-right: 20px;
+    
+    a {
+      padding: 0 10px;
+    }
   }
 }
