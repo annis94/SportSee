@@ -7,20 +7,17 @@ import Score from '../Score/Score';
 import KeyData from '../KeyData/KeyData';
 import LoadingError from '../LoadingError/LoadingError';
 import { getUserData, getUserActivity, getUserAverageSessions, getUserPerformance } from '../../services/api';
+import { mockUsers } from '../../services/mockData';
 
-// Liste des IDs utilisateurs valides
-const VALID_USER_IDS = [12, 18];
+// Liste des slugs utilisateurs valides
+const VALID_USER_SLUGS = mockUsers.map(user => user.slug);
 
 function Dashboard() {
-  // Récupération de l'ID utilisateur depuis l'URL
-  const { userId } = useParams();
+  // Récupération du slug utilisateur depuis l'URL
+  const { userSlug } = useParams();
   
-  // Vérification stricte que userId est un nombre entier valide
-  const isValidInteger = /^[0-9]+$/.test(userId);
-  const userIdNumber = isValidInteger ? parseInt(userId, 10) : null;
-  
-  // Redirection vers la page 404 si l'ID n'est pas valide
-  if (!isValidInteger || !VALID_USER_IDS.includes(userIdNumber)) {
+  // Redirection vers la page 404 si le slug n'est pas valide
+  if (!VALID_USER_SLUGS.includes(userSlug)) {
     return <Navigate to="/404" replace />;
   }
   
@@ -42,10 +39,10 @@ function Dashboard() {
       
       // Récupération de toutes les données en parallèle
       const [user, activity, sessions, performance] = await Promise.all([
-        getUserData(userIdNumber),
-        getUserActivity(userIdNumber),
-        getUserAverageSessions(userIdNumber),
-        getUserPerformance(userIdNumber)
+        getUserData(userSlug),
+        getUserActivity(userSlug),
+        getUserAverageSessions(userSlug),
+        getUserPerformance(userSlug)
       ]);
       
       // Mise à jour des états avec les données récupérées
@@ -60,7 +57,7 @@ function Dashboard() {
       setError(err);
       setIsLoading(false);
     }
-  }, [userIdNumber]);
+  }, [userSlug]);
 
   // Récupération des données au chargement du composant
   useEffect(() => {

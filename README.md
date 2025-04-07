@@ -43,8 +43,8 @@ Le frontend sera disponible sur http://localhost:5173
 ### Gestion des erreurs
 
 - Les URLs invalides redirigent vers une page 404 personnalisée
-- Seuls les utilisateurs avec les IDs 12 et 18 sont disponibles
-- Les IDs non numériques ou invalides sont automatiquement redirigés vers la page 404
+- Seuls les utilisateurs avec les slugs "thomas-durand" et "cecilia-ratorez" sont disponibles
+- Les slugs invalides sont automatiquement redirigés vers la page 404
 - Un message d'erreur s'affiche en cas de problème de chargement des données
 
 ## 🏗 Structure du projet
@@ -104,7 +104,7 @@ Base URL : `http://localhost:3000`
 | `/user/${userId}/average-sessions` | Sessions moyennes |
 | `/user/${userId}/performance` | Données de performance |
 
-**Note** : Seuls les utilisateurs 12 et 18 sont disponibles dans l'API.
+**Note** : En production, l'API devrait accepter les slugs au lieu des IDs. Dans cette version, les slugs sont convertis en IDs en interne.
 
 ## 🛠 Technologies utilisées
 
@@ -121,4 +121,5 @@ Base URL : `http://localhost:3000`
 - Les composants sont optimisés avec React.memo où nécessaire
 - La gestion d'erreur est implémentée à tous les niveaux
 - Les données sont validées avant affichage
-- Design responsive avec points de rupture pour desktop et tablette 
+- Design responsive avec points de rupture pour desktop et tablette
+- Utilisation de slugs pour les URLs au lieu des IDs pour une meilleure sécurité et lisibilité 

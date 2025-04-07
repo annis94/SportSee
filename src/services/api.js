@@ -17,14 +17,22 @@ const formatUserData = (data) => {
   };
 };
 
+// Fonction pour trouver un utilisateur par son slug
+const findUserBySlug = (slug) => {
+  return mockUsers.find(u => u.slug === slug);
+};
+
 // Service pour récupérer les données utilisateur
-export const getUserData = async (userId) => {
+export const getUserData = async (userSlug) => {
   if (USE_MOCK_DATA) {
-    const user = mockUsers.find(u => u.id === userId);
+    const user = findUserBySlug(userSlug);
     return user ? formatUserData(user) : null;
   }
 
   try {
+    // Dans un environnement réel, l'API devrait accepter les slugs
+    // Pour l'instant, on simule en extrayant l'ID du slug
+    const userId = parseInt(userSlug.split('-')[0], 10);
     const response = await axios.get(`http://localhost:3000/user/${userId}`);
     return formatUserData(response.data.data);
   } catch (error) {
@@ -34,12 +42,13 @@ export const getUserData = async (userId) => {
 };
 
 // Service pour récupérer l'activité
-export const getUserActivity = async (userId) => {
+export const getUserActivity = async (userSlug) => {
   if (USE_MOCK_DATA) {
     return mockActivity;
   }
 
   try {
+    const userId = parseInt(userSlug.split('-')[0], 10);
     const response = await axios.get(`http://localhost:3000/user/${userId}/activity`);
     return response.data.data;
   } catch (error) {
@@ -49,12 +58,13 @@ export const getUserActivity = async (userId) => {
 };
 
 // Service pour récupérer les sessions moyennes
-export const getUserAverageSessions = async (userId) => {
+export const getUserAverageSessions = async (userSlug) => {
   if (USE_MOCK_DATA) {
     return mockAverageSessions;
   }
 
   try {
+    const userId = parseInt(userSlug.split('-')[0], 10);
     const response = await axios.get(`http://localhost:3000/user/${userId}/average-sessions`);
     return response.data.data;
   } catch (error) {
@@ -64,12 +74,13 @@ export const getUserAverageSessions = async (userId) => {
 };
 
 // Service pour récupérer les performances
-export const getUserPerformance = async (userId) => {
+export const getUserPerformance = async (userSlug) => {
   if (USE_MOCK_DATA) {
     return mockPerformance;
   }
 
   try {
+    const userId = parseInt(userSlug.split('-')[0], 10);
     const response = await axios.get(`http://localhost:3000/user/${userId}/performance`);
     return response.data.data;
   } catch (error) {

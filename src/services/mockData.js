@@ -2,6 +2,7 @@
 export const mockUsers = [
   {
     id: 12,
+    slug: 'thomas-durand',
     userInfos: {
       firstName: 'Thomas',
       lastName: 'Durand',
@@ -17,6 +18,7 @@ export const mockUsers = [
   },
   {
     id: 18,
+    slug: 'cecilia-ratorez',
     userInfos: {
       firstName: 'Cecilia',
       lastName: 'Ratorez',

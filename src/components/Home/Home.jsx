@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Home.module.scss';
 import { getUserData } from '../../services/api';
+import { mockUsers } from '../../services/mockData';
 
 function Home() {
   const [users, setUsers] = useState([]);
@@ -12,13 +13,13 @@ function Home() {
     const fetchUsers = async () => {
       try {
         // On récupère les données pour les deux utilisateurs
-        const user12 = await getUserData(12);
-        const user18 = await getUserData(18);
+        const user12 = await getUserData('thomas-durand');
+        const user18 = await getUserData('cecilia-ratorez');
         
         if (user12 && user18) {
           setUsers([
-            { id: 12, name: user12.userInfos.name },
-            { id: 18, name: user18.userInfos.name }
+            { id: 12, slug: 'thomas-durand', name: user12.userInfos.name },
+            { id: 18, slug: 'cecilia-ratorez', name: user18.userInfos.name }
           ]);
         } else {
           setError('Impossible de récupérer les utilisateurs');
@@ -61,7 +62,7 @@ function Home() {
         {users.map(user => (
           <Link 
             key={user.id} 
-            to={`/user/${user.id}`} 
+            to={`/user/${user.slug}`} 
             className={styles.userCard}
           >
             <div className={styles.userIcon}>{user.name.charAt(0)}</div>
