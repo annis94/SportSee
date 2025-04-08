@@ -18,8 +18,6 @@ function DailyActivity({ data }) {
             dataKey="day" 
             tickLine={false} 
             tick={{fontSize: 14}}
-            domain={[1, 10]}
-            ticks={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
           />
           <YAxis yAxisId="kg" orientation="right" tickLine={false} axisLine={false} tick={{fontSize: 14}} />
           <YAxis yAxisId="cal" orientation="left" hide={true} />
