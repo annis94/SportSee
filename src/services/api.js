@@ -3,7 +3,7 @@ import { mockUsers, mockActivity, mockAverageSessions, mockPerformance } from '.
 
 // Configuration globale pour déterminer la source de données
 // Le développeur peut changer cette valeur pour basculer entre mock et API
-const USE_MOCK_DATA = true; // true pour utiliser les données mockées, false pour utiliser l'API
+const USE_MOCK_DATA = false; // true pour utiliser les données mockées, false pour utiliser l'API
 
 // Fonction pour standardiser les données utilisateur
 const formatUserData = (data) => {
@@ -22,6 +22,12 @@ const findUserBySlug = (slug) => {
   return mockUsers.find(u => u.slug === slug);
 };
 
+// Mapping des slugs vers les IDs
+const slugToId = {
+  'thomas-durand': 12,
+  'cecilia-ratorez': 18
+};
+
 // Service pour récupérer les données utilisateur
 export const getUserData = async (userSlug) => {
   if (USE_MOCK_DATA) {
@@ -30,9 +36,11 @@ export const getUserData = async (userSlug) => {
   }
 
   try {
-    // Dans un environnement réel, l'API devrait accepter les slugs
-    // Pour l'instant, on simule en extrayant l'ID du slug
-    const userId = parseInt(userSlug.split('-')[0], 10);
+    // Utiliser le mapping des slugs vers les IDs
+    const userId = slugToId[userSlug];
+    if (!userId) {
+      throw new Error(`Utilisateur non trouvé: ${userSlug}`);
+    }
     const response = await axios.get(`http://localhost:3000/user/${userId}`);
     return formatUserData(response.data.data);
   } catch (error) {
@@ -48,7 +56,10 @@ export const getUserActivity = async (userSlug) => {
   }
 
   try {
-    const userId = parseInt(userSlug.split('-')[0], 10);
+    const userId = slugToId[userSlug];
+    if (!userId) {
+      throw new Error(`Utilisateur non trouvé: ${userSlug}`);
+    }
     const response = await axios.get(`http://localhost:3000/user/${userId}/activity`);
     return response.data.data;
   } catch (error) {
@@ -64,7 +75,10 @@ export const getUserAverageSessions = async (userSlug) => {
   }
 
   try {
-    const userId = parseInt(userSlug.split('-')[0], 10);
+    const userId = slugToId[userSlug];
+    if (!userId) {
+      throw new Error(`Utilisateur non trouvé: ${userSlug}`);
+    }
     const response = await axios.get(`http://localhost:3000/user/${userId}/average-sessions`);
     return response.data.data;
   } catch (error) {
@@ -80,7 +94,10 @@ export const getUserPerformance = async (userSlug) => {
   }
 
   try {
-    const userId = parseInt(userSlug.split('-')[0], 10);
+    const userId = slugToId[userSlug];
+    if (!userId) {
+      throw new Error(`Utilisateur non trouvé: ${userSlug}`);
+    }
     const response = await axios.get(`http://localhost:3000/user/${userId}/performance`);
     return response.data.data;
   } catch (error) {
