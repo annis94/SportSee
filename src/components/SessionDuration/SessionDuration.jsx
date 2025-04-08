@@ -13,43 +13,63 @@ function SessionDuration({ data }) {
     { day: 'D', sessionLength: data.sessions[6].sessionLength }
   ];
 
+  const CustomCursor = ({ points }) => {
+    if (!points || points.length < 2) return null;
+    return (
+      <rect
+        x={points[0].x}
+        y={0}
+        width="100%"
+        height="100%"
+        fill="rgba(0, 0, 0, 0.1)"
+        style={{ transform: `translateX(${points[0].x}px)` }}
+      />
+    );
+  };
+
   return (
     <div className={styles.container}>
       <h2>Durée moyenne des sessions</h2>
       <div className={styles.chartContainer}>
-        <ResponsiveContainer width="100%" height={200}>
+        <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={formattedData}
-            margin={{ top: 40, right: 10, left: 10, bottom: 20 }}
+            margin={{ top: 50, right: 20, bottom: 20, left: 20 }}
           >
+            <defs>
+              <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="rgba(255, 255, 255, 0.4)" />
+                <stop offset="100%" stopColor="rgba(255, 255, 255, 1)" />
+              </linearGradient>
+            </defs>
             <XAxis
               dataKey="day"
               axisLine={false}
               tickLine={false}
               tick={{ fill: 'rgba(255, 255, 255, 0.6)', fontSize: 12 }}
               dy={10}
-              padding={{ left: 5, right: 5 }}
+              padding={{ left: 10, right: 10 }}
             />
-            <YAxis hide domain={['dataMin-10', 'dataMax+10']} />
+            <YAxis 
+              hide 
+              domain={['dataMin-10', 'dataMax+10']}
+            />
             <Tooltip
               content={<CustomTooltip />}
-              cursor={{
-                stroke: 'rgba(0, 0, 0, 0.1)',
-                strokeWidth: 32,
-                height: 200
-              }}
+              cursor={<CustomCursor />}
+              position={{ y: 0 }}
             />
             <Line
-              type="monotone"
+              type="natural"
               dataKey="sessionLength"
-              stroke="#FFFFFF"
+              stroke="url(#lineGradient)"
               strokeWidth={2}
               dot={false}
               activeDot={{
                 r: 4,
                 fill: 'white',
                 strokeWidth: 8,
-                stroke: 'rgba(255, 255, 255, 0.3)'
+                stroke: 'rgba(255, 255, 255, 0.2)'
               }}
             />
           </LineChart>
