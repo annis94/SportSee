@@ -14,7 +14,13 @@ function DailyActivity({ data }) {
       <ResponsiveContainer width="100%" height={280}>
         <BarChart data={data.sessions} barGap={8} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
-          <XAxis dataKey="day" tickLine={false} tick={{fontSize: 14}} />
+          <XAxis 
+            dataKey="day" 
+            tickLine={false} 
+            tick={{fontSize: 14}}
+            domain={[1, 10]}
+            ticks={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+          />
           <YAxis yAxisId="kg" orientation="right" tickLine={false} axisLine={false} tick={{fontSize: 14}} />
           <YAxis yAxisId="cal" orientation="left" hide={true} />
           <Tooltip 

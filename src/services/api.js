@@ -3,7 +3,7 @@ import { mockUsers, mockActivity, mockAverageSessions, mockPerformance } from '.
 
 // Configuration globale pour déterminer la source de données
 // Le développeur peut changer cette valeur pour basculer entre mock et API
-const USE_MOCK_DATA = false; // true pour utiliser les données mockées, false pour utiliser l'API
+const USE_MOCK_DATA = true; // true pour utiliser les données mockées, false pour utiliser l'API
 
 // Fonction pour standardiser les données utilisateur
 const formatUserData = (data) => {
