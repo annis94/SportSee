@@ -3,68 +3,37 @@
 .container {
   background: #FF0000;
   border-radius: 5px;
-  padding: 20px;
-  width: 100%;
-  min-width: 258px;
-  aspect-ratio: 1;
+  padding: 20px 10px 10px;
   position: relative;
-  overflow: hidden;
+  width: 100%;
+  min-width: 200px;
+  height: 260px;
+  box-sizing: border-box;
 
   h2 {
     font-size: 15px;
     color: rgba(255, 255, 255, 0.6);
-    width: 147px;
+    margin: 0 0 0 34px;
+    width: 150px;
     font-weight: 500;
-    margin-bottom: 40px;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 20%;
-    background: linear-gradient(to right, rgba(255, 0, 0, 0), #FF0000);
-    pointer-events: none;
-    z-index: 1;
   }
 }
 
 .chartContainer {
-  height: calc(100% - 80px);
+  height: 200px;
   width: 100%;
   position: relative;
-
-  :global {
-    .recharts-cartesian-grid {
-      display: none;
-    }
-
-    .recharts-cartesian-axis-tick-value {
-      fill: rgba(255, 255, 255, 0.6);
-      font-size: 12px;
-    }
-
-    .recharts-curve {
-      opacity: 1;
-    }
-
-    .recharts-active-dot {
-      z-index: 10;
-    }
-  }
 }
 
 .tooltip {
   background: white;
+  padding: -5px;
+  font-size: 10px;
   color: black;
-  white-space: nowrap;
-  pointer-events: none;
-  z-index: 10;
+  font-weight: 500;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   
   p {
-    padding: 9px;
+    padding: 13px;
   }
 }
-
